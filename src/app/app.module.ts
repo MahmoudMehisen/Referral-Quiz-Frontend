@@ -14,7 +14,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminAuthComponent} from './admin/admin-auth/admin-auth.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { QuestionComponent } from './admin/admin-home/question/question.component';
+import {AuthInterceptorService} from "./admin/admin-home/admin-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import {HttpClientModule} from "@angular/common/http";
     WelcomeComponent,
     AdminComponent,
     AdminAuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AdminHomeComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,13 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

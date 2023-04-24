@@ -10,14 +10,9 @@ import {Observable} from "rxjs";
   styleUrls: ['./admin-auth.component.css']
 })
 export class AdminAuthComponent {
-  isLoginMode = true;
   isLoading = false;
 
   constructor(private authService: AdminAuthService, private router: Router) {
-  }
-
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
   }
 
   onSubmit(form: NgForm) {
@@ -32,7 +27,7 @@ export class AdminAuthComponent {
       .subscribe({
         next: resData => {
           this.isLoading = false;
-          this.router.navigate(['/recipes']);
+          this.router.navigate(['/admin/home']);
         },
         error: errorMessage => {
           this.isLoading = false;
