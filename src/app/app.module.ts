@@ -18,6 +18,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { QuestionComponent } from './admin/admin-home/question/question.component';
 import {AuthInterceptorService} from "./admin/admin-home/admin-interceptor.service";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -29,19 +30,20 @@ import {AuthInterceptorService} from "./admin/admin-home/admin-interceptor.servi
     AdminHomeComponent,
     QuestionComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatCheckboxModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

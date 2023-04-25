@@ -10,36 +10,38 @@ import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
 export class AdminHomeService {
 
   // @ts-ignore
-  questionsList: Subject<Question[]>;
+  questionsList: Question[];
+  // @ts-ignore
+  metadata: QuizMetadata;
+
+  // @ts-ignore
+  isDataLoading = new Subject<boolean>(true);
 
   constructor(private http: HttpClient) {
   }
 
-  fetchAdminHomeData() {
-
+  async fetchAdminHomeData() {
+    this.isDataLoading.next(true);
     const requests = [
       this.fetchQuestionsList(),
       this.fetchQuizMetadata()
     ];
-
     forkJoin(requests).subscribe(results => {
-      console.log('done')
+
+      this.questionsList = results[0] as Question[];
+      this.metadata = results[1] as QuizMetadata;
+
+      this.isDataLoading.next(false);
+      console.log(results)
     });
-
   }
 
 
-  private async fetchQuestionsList() {
-    await lastValueFrom(this.http.get<Question[]>('http://localhost:8080/api/admin/allQuestions'))
-      .then((value) => {
-        console.log(value);
-      });
+  private async fetchQuestionsList(): Promise<Question[]> {
+    return await lastValueFrom(this.http.get<Question[]>('http://localhost:8080/api/admin/allQuestions'));
   }
 
-  private async fetchQuizMetadata() {
-    await lastValueFrom(this.http.get<QuizMetadata>('http://localhost:8080/api/admin/metadata'))
-      .then((value) => {
-        console.log(value);
-      });
+  private async fetchQuizMetadata(): Promise<QuizMetadata> {
+    return await lastValueFrom(this.http.get<QuizMetadata>('http://localhost:8080/api/admin/metadata'));
   }
 }

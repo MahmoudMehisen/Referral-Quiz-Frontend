@@ -1,9 +1,53 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-question></app-question>
-      <hr>
-      <button (click)="onLogout()"> Logout</button>
+      <div *ngIf="isLoading" style="text-align: center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+
+      <div *ngIf="!isLoading" style="text-align: center; padding: 10px">
+        <div>
+          <h1 style="font-size: 40px; font-weight: bold; color: brown">Admin Home Page</h1>
+        </div>
+        <div>
+          <h1 style="font-size: 30px; color: brown;text-align: start">Quiz Info</h1>
+          <form #authForm="ngForm" style="display: flex;">
+            <div style="flex: 2; margin-right: 10px;">
+              <label for="numOfQuestions">Number of Questions</label>
+              <input type="number" id="numOfQuestions" class="form-control" name="numOfQuestions" [min]="1"
+                     value="{{quizMetaData.numberOfQuestions}}" required>
+            </div>
+            <div style="flex: 3; margin-right: 10px;">
+              <label for="referralExpirationTime">Referral Expiration Time in ms</label>
+              <input type="number" id="referralExpirationTime" class="form-control" name="referralExpirationTime"
+                     [min]="1"
+                     value="{{quizMetaData.referralExpirationTime}}" required>
+            </div>
+            <div style="flex: 2; margin-right: 10px;">
+              <label for="referralExpirationTime">User Can Referral</label>
+              <mat-checkbox color="warn"></mat-checkbox>
+            </div>
+            <div style="flex: 1; margin-right: 10px;">
+              <button mat-flat-button color="warn" type="submit" [disabled]="!authForm.valid">Save</button>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div>
+          <div class="header" (click)="toggleList()">
+            <h1 style="font-size: 30px; color: brown;text-align: start">Questions List</h1>
+            <i [class]="isExpanded ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+          </div>
+          <div style="height: 500px; overflow-y: scroll;">
+            <div *ngFor="let quest of questionsList; let i = index">
+              <app-question [index]="i" [question]="quest"></app-question>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <button (click)="onLogout()"> Logout</button>
+      </div>
     </div>
   </div>
 </div>

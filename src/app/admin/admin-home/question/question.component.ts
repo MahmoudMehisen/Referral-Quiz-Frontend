@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Question} from "../../../shared/models/question.model";
 
 @Component({
   selector: 'app-question',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./question.component.css']
 })
 export class QuestionComponent {
-  questionList=["a","b","c","d"];
+  // @ts-ignore
+  @Input() index:number;
+  // @ts-ignore
+  @Input() question:Question;
+
 }
