@@ -15,10 +15,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminAuthComponent} from './admin/admin-auth/admin-auth.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
-import { QuestionComponent } from './admin/admin-home/question/question.component';
-import {AuthInterceptorService} from "./admin/admin-home/admin-interceptor.service";
+import {AdminHomeComponent} from './admin/admin-home/admin-home.component';
+import {QuestionComponent} from './admin/admin-home/question/question.component';
+import {AuthInterceptorService} from "./admin/admin-auth/admin-interceptor.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AddQuestionComponent} from './admin/admin-home/add-question/add-question.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -28,22 +30,24 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     AdminAuthComponent,
     LoadingSpinnerComponent,
     AdminHomeComponent,
-    QuestionComponent
+    QuestionComponent,
+    AddQuestionComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatDividerModule,
-        MatFormFieldModule,
-        MatIconModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatDialogModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

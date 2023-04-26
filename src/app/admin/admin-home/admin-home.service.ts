@@ -35,6 +35,13 @@ export class AdminHomeService {
     });
   }
 
+  addNewQuestion(question:string, options:string[]){
+    return this.http.post('http://localhost:8080/api/admin/addQuestion',{
+      questionText:question,
+      questionOptions:options
+    })
+  }
+
   updateMetadata(newMetadata: QuizMetadata){
     this.isDataLoading.next(true);
     return this.http.put<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata',newMetadata).subscribe(res=>{

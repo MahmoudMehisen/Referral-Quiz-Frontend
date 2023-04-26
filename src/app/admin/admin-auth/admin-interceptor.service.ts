@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {AdminAuthService} from "../admin-auth/admin-auth.service";
+import {AdminAuthService} from "./admin-auth.service";
 import {exhaustMap, take} from "rxjs/operators";
 
 @Injectable()
@@ -18,8 +18,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         const headers = new HttpHeaders({
           'Authorization': 'Bearer ' + admin.token,
           'Content-Type': 'application/json; charset=utf-8',
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin':'*'
+          'Accept': 'application/json'
         });
         const modifiedReq = req.clone({
           headers: headers

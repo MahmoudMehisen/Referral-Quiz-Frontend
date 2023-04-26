@@ -12,18 +12,22 @@
         </div>
         <div>
           <h1 style="font-size: 30px; color: brown;text-align: start">Quiz Info</h1>
-          <form #metadataForm="ngForm" (ngSubmit)="onSave(metadataForm)" *ngIf="!isLoading" style="display: flex; align-items: center">
+          <form #metadataForm="ngForm" (ngSubmit)="onSave(metadataForm)" *ngIf="!isLoading"
+                style="display: flex; align-items: center">
             <div style="flex: 2; margin-right: 10px;">
               <label for="numOfQuestions">Number of Questions</label>
-              <input type="number" id="numOfQuestions" class="form-control"[min]="1" required ngModel="{{quizMetaData.numberOfQuestions}}" name="numberOfQuestions">
+              <input type="number" id="numOfQuestions" class="form-control" [min]="1" required
+                     ngModel="{{quizMetaData.numberOfQuestions}}" name="numberOfQuestions">
             </div>
             <div style="flex: 3; margin-right: 10px;">
               <label for="referralExpirationTime">Referral Expiration Time in ms</label>
-              <input type="number" id="referralExpirationTime" class="form-control" [min]="1"  ngModel="{{quizMetaData.referralExpirationTime}}" name="referralExpirationTime">
+              <input type="number" id="referralExpirationTime" class="form-control" [min]="1"
+                     ngModel="{{quizMetaData.referralExpirationTime}}" name="referralExpirationTime">
             </div>
             <div style="flex: 2; margin-right: 10px; ">
               <label for="canUserDoReferral">User Can Referral</label>
-              <input class="form-check-input" id="canUserDoReferral" type="checkbox"  ngModel="{{quizMetaData.canUserDoReferral}}" name="canUserDoReferral"/>
+              <input class="form-check-input" id="canUserDoReferral" type="checkbox"
+                     ngModel="{{quizMetaData.canUserDoReferral}}" name="canUserDoReferral"/>
             </div>
             <div style="flex: 1; margin-right: 10px;">
               <button mat-flat-button color="warn" type="submit">Save</button>
@@ -32,9 +36,9 @@
         </div>
         <hr>
         <div>
-          <div class="header" (click)="toggleList()">
+          <div style="display: flex; justify-content: space-between">
             <h1 style="font-size: 30px; color: brown;text-align: start">Questions List</h1>
-            <i [class]="isExpanded ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+            <button mat-flat-button color="warn" (click)="onAddQuestion()">New Question</button>
           </div>
           <div style="height: 500px; overflow-y: scroll;">
             <div *ngFor="let quest of questionsList; let i = index">

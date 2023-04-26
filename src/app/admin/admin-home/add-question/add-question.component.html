@@ -1,0 +1,38 @@
+<div *ngIf="isLoading" style="text-align: center">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+<div *ngIf="!isLoading">
+  <h2>Add a New Question</h2>
+  <form #questionForm="ngForm" (ngSubmit)="submit(questionForm)" novalidate>
+    <label>
+      Question Text:
+      <input name="questionText" type="text" [(ngModel)]="question.questionText" required>
+    </label>
+
+    <label>
+      Answer:
+      <input name="option1" type="text" [(ngModel)]="question.options[0]" required>
+    </label>
+
+    <label>
+      Option 2:
+      <input name="option2" type="text" [(ngModel)]="question.options[1]" required>
+    </label>
+
+    <label>
+      Option 3:
+      <input name="option3" type="text" [(ngModel)]="question.options[2]" required>
+    </label>
+
+    <label>
+      Option 4:
+      <input name="option4" type="text" [(ngModel)]="question.options[3]" required>
+    </label>
+
+    <div *ngIf="isAddedSuccessfully">
+      <h1 style="background-color: green; color: white">Question Added Successfully</h1>
+    </div>
+
+    <button mat-flat-button color="warn" [disabled]="!questionForm.valid">Submit</button>
+  </form>
+</div>
