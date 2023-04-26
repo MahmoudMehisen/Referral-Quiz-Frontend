@@ -20,7 +20,7 @@ export class AdminHomeService {
   constructor(private http: HttpClient) {
   }
 
-  async fetchAdminHomeData() {
+   fetchAdminHomeData() {
     this.isDataLoading.next(true);
     const requests = [
       this.fetchQuestionsList(),
@@ -32,10 +32,16 @@ export class AdminHomeService {
       this.metadata = results[1] as QuizMetadata;
 
       this.isDataLoading.next(false);
-      console.log(results)
     });
   }
 
+  updateMetadata(newMetadata: QuizMetadata){
+    this.isDataLoading.next(true);
+    return this.http.put<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata',newMetadata).subscribe(res=>{
+      this.metadata = res;
+      this.isDataLoading.next(false);
+    });
+  }
 
   private async fetchQuestionsList(): Promise<Question[]> {
     return await lastValueFrom(this.http.get<Question[]>('http://localhost:8080/api/admin/allQuestions'));

@@ -19,6 +19,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           'Authorization': 'Bearer ' + admin.token,
           'Content-Type': 'application/json; charset=utf-8',
           'Accept': 'application/json',
+          'Access-Control-Allow-Origin':'*'
         });
         const modifiedReq = req.clone({
           headers: headers

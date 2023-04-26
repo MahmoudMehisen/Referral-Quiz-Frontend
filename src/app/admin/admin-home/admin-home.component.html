@@ -12,24 +12,21 @@
         </div>
         <div>
           <h1 style="font-size: 30px; color: brown;text-align: start">Quiz Info</h1>
-          <form #authForm="ngForm" style="display: flex;">
+          <form #metadataForm="ngForm" (ngSubmit)="onSave(metadataForm)" *ngIf="!isLoading" style="display: flex; align-items: center">
             <div style="flex: 2; margin-right: 10px;">
               <label for="numOfQuestions">Number of Questions</label>
-              <input type="number" id="numOfQuestions" class="form-control" name="numOfQuestions" [min]="1"
-                     value="{{quizMetaData.numberOfQuestions}}" required>
+              <input type="number" id="numOfQuestions" class="form-control"[min]="1" required ngModel="{{quizMetaData.numberOfQuestions}}" name="numberOfQuestions">
             </div>
             <div style="flex: 3; margin-right: 10px;">
               <label for="referralExpirationTime">Referral Expiration Time in ms</label>
-              <input type="number" id="referralExpirationTime" class="form-control" name="referralExpirationTime"
-                     [min]="1"
-                     value="{{quizMetaData.referralExpirationTime}}" required>
+              <input type="number" id="referralExpirationTime" class="form-control" [min]="1"  ngModel="{{quizMetaData.referralExpirationTime}}" name="referralExpirationTime">
             </div>
-            <div style="flex: 2; margin-right: 10px;">
-              <label for="referralExpirationTime">User Can Referral</label>
-              <mat-checkbox color="warn"></mat-checkbox>
+            <div style="flex: 2; margin-right: 10px; ">
+              <label for="canUserDoReferral">User Can Referral</label>
+              <input class="form-check-input" id="canUserDoReferral" type="checkbox"  ngModel="{{quizMetaData.canUserDoReferral}}" name="canUserDoReferral"/>
             </div>
             <div style="flex: 1; margin-right: 10px;">
-              <button mat-flat-button color="warn" type="submit" [disabled]="!authForm.valid">Save</button>
+              <button mat-flat-button color="warn" type="submit">Save</button>
             </div>
           </form>
         </div>

@@ -4,6 +4,7 @@ import {AdminAuthService} from "../admin-auth/admin-auth.service";
 import {Subscription} from "rxjs";
 import {Question} from "../../shared/models/question.model";
 import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-admin-home',
@@ -26,10 +27,17 @@ export class AdminHomeComponent implements OnInit, OnDestroy{
     this.dataSubscription = this.adminHomeService.isDataLoading.subscribe(isLoading=>{
       this.isLoading = isLoading;
       this.quizMetaData = this.adminHomeService.metadata;
-      console.log(this.quizMetaData);
       this.questionsList = this.adminHomeService.questionsList;
     });
     this.adminHomeService.fetchAdminHomeData();
+  }
+  onSave(form: NgForm){
+    if(!form.valid){
+      return;
+    }
+    const metadata = form.value as QuizMetadata;
+    this.isLoading = true;
+    this.adminHomeService.updateMetadata(metadata);
   }
   onLogout(){
     this.adminAuthService.logout();
