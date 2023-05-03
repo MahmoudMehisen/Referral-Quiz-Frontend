@@ -5,13 +5,17 @@ import {AdminComponent} from "./admin/admin.component";
 import {AdminAuthComponent} from "./admin/admin-auth/admin-auth.component";
 import {AdminGuard} from "./admin/admin-auth/admin-guard";
 import {AdminHomeComponent} from "./admin/admin-home/admin-home.component";
+import {AddQuestionComponent} from "./admin/admin-home/add-question/add-question.component";
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
   {
     path: 'admin', component: AdminComponent, children: [
       {path: 'auth', component: AdminAuthComponent},
-      {path: 'home', component: AdminHomeComponent},
+      {
+        path: 'home', component: AdminHomeComponent
+      },
+
     ]
   }
 ];

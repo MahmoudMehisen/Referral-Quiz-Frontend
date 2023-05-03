@@ -5,6 +5,8 @@ import {Subscription} from "rxjs";
 import {Question} from "../../shared/models/question.model";
 import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
 import {NgForm} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {AddQuestionComponent} from "./add-question/add-question.component";
 
 @Component({
   selector: 'app-admin-home',
@@ -20,7 +22,7 @@ export class AdminHomeComponent implements OnInit, OnDestroy{
   quizMetaData:QuizMetadata;
   dataSubscription = new Subscription()
 
-  constructor(private adminHomeService:AdminHomeService,private adminAuthService:AdminAuthService) {
+  constructor(private adminHomeService:AdminHomeService,private adminAuthService:AdminAuthService,private addDialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,10 +44,8 @@ export class AdminHomeComponent implements OnInit, OnDestroy{
   onLogout(){
     this.adminAuthService.logout();
   }
-
-  toggleList(){
-    this.isExpanded = !this.isExpanded;
-    console.log(this.isExpanded)
+  onAddQuestion(){
+   this.addDialog.open(AddQuestionComponent);
   }
 
   ngOnDestroy() {
