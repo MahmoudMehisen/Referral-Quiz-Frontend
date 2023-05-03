@@ -21,6 +21,7 @@ import {AuthInterceptorService} from "./admin/admin-auth/admin-interceptor.servi
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddQuestionComponent} from './admin/admin-home/add-question/add-question.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,12 @@ import {MatDialogModule} from "@angular/material/dialog";
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpResponseInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

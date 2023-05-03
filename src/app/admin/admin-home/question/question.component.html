@@ -1,13 +1,22 @@
 <div class="question-card">
-  <div class="question-number">Question {{index + 1}}</div>
-  <div class="question-text" style="text-align: start">{{question.questionText}}</div>
-  <div class="options">
-    <label style="text-align: start"
+  <div *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
 
-      *ngFor="let option of question.options; let i = index"
-      [ngStyle]="{ 'background-color': option.id === question.answer.id ? '#007400' : '#990000' }"
-    >
-      <span class="option-text" style="color: white; font-size: 20px;padding: 5px;">{{option.optionText}}</span>
-    </label>
+  <div *ngIf="!isLoading">
+    <div class="question-number">Question {{index + 1}}</div>
+    <div class="question-text" style="text-align: start">{{question.questionText}}</div>
+    <div class="options">
+      <label style="text-align: start"
+             *ngFor="let option of question.options; let i = index"
+             [ngStyle]="{ 'background-color': option.id === question.answer.id ? '#007400' : '#990000' }">
+        <span class="option-text" style="color: white; font-size: 20px;padding: 5px;">{{option.optionText}}</span>
+      </label>
+    </div>
+    <div style="display: flex; justify-content: space-around">
+      <button mat-flat-button color="warn" (click)="onEdit()">Edit</button>
+      <button mat-flat-button color="warn" (click)="onDelete()">Delete</button>
+    </div>
   </div>
 </div>
+<hr>
