@@ -22,6 +22,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddQuestionComponent} from './admin/admin-home/add-question/add-question.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
     HttpClientModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule
   ],
   providers: [
     {

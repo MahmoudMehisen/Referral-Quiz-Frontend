@@ -39,7 +39,7 @@ export class AdminHomeService {
      })
   }
 
-  addNewQuestion(question:string, options:string[]){
+  addNewQuestion(question:string, options:any[]){
     return this.http.post('http://localhost:8080/api/admin/addQuestion',{
       questionText:question,
       questionOptions:options
@@ -47,7 +47,7 @@ export class AdminHomeService {
   }
 
   updateQuestion(index:number,question:Question){
-    return this.http.put('http://localhost:8080/api/admin/updateQuestion',{
+    return this.http.post('http://localhost:8080/api/admin/updateQuestion',{
       id:question.id,
       questionText:question.questionText,
       options:question.options
@@ -73,7 +73,7 @@ export class AdminHomeService {
 
   updateMetadata(newMetadata: QuizMetadata){
     this.isDataLoading.next(true);
-    return this.http.put<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata',newMetadata).subscribe(res=>{
+    return this.http.post<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata',newMetadata).subscribe(res=>{
       this.metadata = res;
       this.isDataLoading.next(false);
     });

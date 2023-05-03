@@ -4,32 +4,25 @@
 <div *ngIf="!isLoading">
   <h2>Add a New Question</h2>
   <form #questionForm="ngForm" (ngSubmit)="submit(questionForm)" novalidate>
+
+
     <label>
       Question Text:
       <input name="questionText" type="text" [(ngModel)]="questionData.questionText" required>
     </label>
 
-    <label>
-      Answer:
-      <input name="option1" type="text" [(ngModel)]="questionData.options[0]" required>
-    </label>
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" (change)="onSelectionChange($event)">
+      <div *ngFor="let option of questionData.options; let i = index">
+        <label>
+          Option {{i+1}}:
+          <input name="option{{i}}" type="text" [ngModel]="option.optionText" required>
+        </label>
+        <mat-radio-button  [color]="'warn'" class="radio-button" [value]="i" checked="{{option.isTheAnswer}}">
+        </mat-radio-button>
+      </div>
+    </mat-radio-group>
 
-    <label>
-      Option 2:
-      <input name="option2" type="text" [(ngModel)]="questionData.options[1]" required>
-    </label>
-
-    <label>
-      Option 3:
-      <input name="option3" type="text" [(ngModel)]="questionData.options[2]" required>
-    </label>
-
-    <label>
-      Option 4:
-      <input name="option4" type="text" [(ngModel)]="questionData.options[3]" required>
-    </label>
-
-    <div *ngIf="isAddedSuccessfully"  class="alert alert-success" role="alert">
+    <div *ngIf="isAddedSuccessfully" class="alert alert-success" role="alert">
       Question Added Successfully
     </div>
 
