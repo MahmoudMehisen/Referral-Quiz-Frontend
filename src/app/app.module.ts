@@ -23,6 +23,7 @@ import {AddQuestionComponent} from './admin/admin-home/add-question/add-question
 import {MatDialogModule} from "@angular/material/dialog";
 import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
 import {MatRadioModule} from '@angular/material/radio';
+import { GenerateReferralComponent } from './admin/admin-home/generate-referral/generate-referral.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatRadioModule} from '@angular/material/radio';
     LoadingSpinnerComponent,
     AdminHomeComponent,
     QuestionComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    GenerateReferralComponent
   ],
   imports: [
     BrowserModule,

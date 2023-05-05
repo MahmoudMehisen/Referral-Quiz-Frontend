@@ -4,6 +4,7 @@ import {Subject, lastValueFrom, forkJoin} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AdminAuthService} from "../admin-auth/admin-auth.service";
 import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
+import {ReferralTokenModel} from "../../shared/models/referral-token.model";
 
 
 @Injectable({providedIn: 'root'})
@@ -77,6 +78,14 @@ export class AdminHomeService {
       this.metadata = res;
       this.isDataLoading.next(false);
     });
+  }
+
+  generateReferralToken(phoneNumber:string){
+    return this.http.post<ReferralTokenModel>('http://localhost:8080/api/admin/generateReferral',{
+      phoneNumber:phoneNumber,
+      userId:1,
+      fromAdmin:true
+    })
   }
 
   private async fetchQuestionsList(): Promise<Question[]> {

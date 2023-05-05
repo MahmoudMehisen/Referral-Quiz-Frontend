@@ -7,6 +7,7 @@ import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
 import {NgForm} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {AddQuestionComponent} from "./add-question/add-question.component";
+import {GenerateReferralComponent} from "./generate-referral/generate-referral.component";
 
 @Component({
   selector: 'app-admin-home',
@@ -46,6 +47,10 @@ export class AdminHomeComponent implements OnInit, OnDestroy{
   }
   onAddQuestion(){
    this.addDialog.open(AddQuestionComponent);
+  }
+
+  onGenerateReferral(){
+    this.addDialog.open(GenerateReferralComponent);
   }
 
   ngOnDestroy() {

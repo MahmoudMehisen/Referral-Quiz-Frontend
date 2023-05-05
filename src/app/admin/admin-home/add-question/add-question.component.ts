@@ -13,19 +13,16 @@ import { MatRadioChange } from '@angular/material/radio';
 export class AddQuestionComponent implements OnInit {
 
 
-  // @ts-ignore
-
 
   questionData = {
     questionText: '',
     options: [
-      { optionText: '', isTheAnswer: true },
-      { optionText: '', isTheAnswer: false },
-      { optionText: '', isTheAnswer: false },
-      { optionText: '', isTheAnswer: false },
+      { optionText: '', isCorrectAnswer: true },
+      { optionText: '', isCorrectAnswer: false },
+      { optionText: '', isCorrectAnswer: false },
+      { optionText: '', isCorrectAnswer: false },
     ]
   };
-  selectedIndex = 0;
   isLoading = false;
   isAddedSuccessfully = false;
 
@@ -37,11 +34,10 @@ export class AddQuestionComponent implements OnInit {
   }
 
   onSelectionChange(event: MatRadioChange) {
-    if (event.value) {
-      //this.questionData.options[this.selectedIndex].isTheAnswer = false;
+    if (event.value!=null) {
       console.log(event.value);
-      //this.selectedIndex = event.value;
-      //this.questionData.options[this.selectedIndex].isTheAnswer = true;
+      this.questionData.options.forEach(option=>option.isCorrectAnswer = false);
+      this.questionData.options[event.value].isCorrectAnswer = true;
     }
   }
 
@@ -50,7 +46,7 @@ export class AddQuestionComponent implements OnInit {
     if (this.data != null && this.data.isEditMode) {
       this.questionData.questionText = this.data.question.questionText;
       this.questionData.options = this.data.question.options.map(val => {
-        return { optionText: val.optionText, isTheAnswer: val.isCorrectAnswer };
+        return { optionText: val.optionText, isCorrectAnswer: val.isCorrectAnswer };
       });
     }
   }
@@ -65,13 +61,12 @@ export class AddQuestionComponent implements OnInit {
 
         this.questionData.options.forEach((value, index) => {
           this.data.question.options[index].optionText = value.optionText;
-          this.data.question.options[index].isCorrectAnswer = value.isTheAnswer;
+          this.data.question.options[index].isCorrectAnswer = value.isCorrectAnswer;
         })
-        console.log(this.data.question.options);
-        
+        console.log(this.questionData.options);
+
 
         await this.adminHomeService.updateQuestion(this.data.index, this.data.question);
-
         this.isLoading = false;
         this.isAddedSuccessfully = true;
       } else {
@@ -82,13 +77,12 @@ export class AddQuestionComponent implements OnInit {
           this.questionData = {
             questionText: '',
             options: [
-              { optionText: '', isTheAnswer: true },
-              { optionText: '', isTheAnswer: false },
-              { optionText: '', isTheAnswer: false },
-              { optionText: '', isTheAnswer: false },
+              { optionText: '', isCorrectAnswer: true },
+              { optionText: '', isCorrectAnswer: false },
+              { optionText: '', isCorrectAnswer: false },
+              { optionText: '', isCorrectAnswer: false },
             ]
           };
-          this.selectedIndex = 0;
           this.isAddedSuccessfully = true;
         }, error => {
           console.log(error);
