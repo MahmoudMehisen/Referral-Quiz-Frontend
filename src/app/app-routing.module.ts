@@ -6,6 +6,8 @@ import {AdminAuthComponent} from "./admin/admin-auth/admin-auth.component";
 import {AdminGuard} from "./admin/admin-auth/admin-guard";
 import {AdminHomeComponent} from "./admin/admin-home/admin-home.component";
 import {AddQuestionComponent} from "./admin/admin-home/add-question/add-question.component";
+import {InvitationComponent} from "./invitation/invitation.component";
+import {PagenotfoundComponent} from "./pagenotfound/pagenotfound.component";
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -17,7 +19,13 @@ const routes: Routes = [
       },
 
     ]
-  }
+  },
+  {
+    path:'invitation', component:InvitationComponent
+  },
+
+  { path: '**', pathMatch: 'full',
+    component: PagenotfoundComponent },
 ];
 
 @NgModule({

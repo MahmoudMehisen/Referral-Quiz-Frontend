@@ -24,6 +24,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
 import {MatRadioModule} from '@angular/material/radio';
 import { GenerateReferralComponent } from './admin/admin-home/generate-referral/generate-referral.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { GenerateReferralComponent } from './admin/admin-home/generate-referral/
     AdminHomeComponent,
     QuestionComponent,
     AddQuestionComponent,
-    GenerateReferralComponent
+    GenerateReferralComponent,
+    InvitationComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
