@@ -15,9 +15,14 @@
           <form #metadataForm="ngForm" (ngSubmit)="onSave(metadataForm)" *ngIf="!isLoading"
                 style="display: flex; align-items: center">
             <div style="flex: 2; margin-right: 10px;">
-              <label for="numOfQuestions">Number of Questions</label>
-              <input type="number" id="numOfQuestions" class="form-control" [min]="1" required
-                     ngModel="{{quizMetaData.numberOfQuestions}}" name="numberOfQuestions">
+              <label for="pointsPerQuestion">Points Per Questions</label>
+              <input type="number" id="pointsPerQuestion" class="form-control" [min]="1" required
+                     ngModel="{{quizMetaData.pointsPerQuestion}}" name="pointsPerQuestion">
+            </div>
+            <div style="flex: 2; margin-right: 10px;">
+              <label for="pointsPerReferral">Points Per Referral</label>
+              <input type="number" id="pointsPerReferral" class="form-control" [min]="1" required
+                     ngModel="{{quizMetaData.pointsPerReferral}}" name="pointsPerReferral">
             </div>
             <div style="flex: 3; margin-right: 10px;">
               <label for="referralExpirationTime">Referral Expiration Time in ms</label>

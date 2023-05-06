@@ -1,4 +1,4 @@
 export class QuizMetadata {
-  constructor(public id: number, public numberOfQuestions: number, public referralExpirationTime:number,public canUserDoReferral:boolean) {
+  constructor(public id: number, public pointsPerQuestion: number, public pointsPerReferral: number, public referralExpirationTime: number, public canUserDoReferral: boolean) {
   }
 }
