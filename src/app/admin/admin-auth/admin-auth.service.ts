@@ -80,9 +80,7 @@ export class AdminAuthService {
 
     if (loadedAdmin.token) {
       this.admin.next(loadedAdmin);
-      const expirationDuration =
-        new Date(adminData._tokenExpirationDate).getTime() -
-        new Date().getTime();
+      const expirationDuration = new Date(adminData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
       this.router.navigate(['/admin/home']);
     }

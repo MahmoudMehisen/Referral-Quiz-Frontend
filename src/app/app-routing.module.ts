@@ -8,24 +8,28 @@ import {AdminHomeComponent} from "./admin/admin-home/admin-home.component";
 import {AddQuestionComponent} from "./admin/admin-home/add-question/add-question.component";
 import {InvitationComponent} from "./invitation/invitation.component";
 import {PagenotfoundComponent} from "./pagenotfound/pagenotfound.component";
+import {QuizComponent} from "./quiz/quiz.component";
+import {QuizAuthComponent} from "./quiz/quiz-auth/quiz-auth.component";
+import {QuizHomeComponent} from "./quiz/quiz-home/quiz-home.component";
+import {QuizGameComponent} from "./quiz/quiz-game/quiz-game.component";
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
   {
     path: 'admin', component: AdminComponent, children: [
       {path: 'auth', component: AdminAuthComponent},
-      {
-        path: 'home', component: AdminHomeComponent
-      },
-
+      {path: 'home', component: AdminHomeComponent},
     ]
   },
   {
-    path:'invitation', component:InvitationComponent
+    path: 'quiz', component: QuizComponent, children: [
+      {path: 'auth', component: QuizAuthComponent},
+      {path: 'home', component: QuizHomeComponent},
+      {path: 'game', component: QuizGameComponent},
+    ]
   },
-
-  { path: '**', pathMatch: 'full',
-    component: PagenotfoundComponent },
+  {path: 'invitation/:token', component: InvitationComponent},
+  {path: '**', pathMatch: 'full', component: PagenotfoundComponent},
 ];
 
 @NgModule({

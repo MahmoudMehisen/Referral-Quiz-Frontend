@@ -18,26 +18,24 @@ export class AdminHomeService {
   // @ts-ignore
   isDataLoading = new Subject<boolean>(true);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private adminAuthService:AdminAuthService) {
   }
 
    fetchAdminHomeData() {
-    this.isDataLoading.next(true);
-    const requests = [
-      this.fetchQuestionsList(),
-      this.fetchQuizMetadata()
-    ];
+    if(this.adminAuthService.admin.getValue() != null) {
+      this.isDataLoading.next(true);
+      const requests = [
+        this.fetchQuestionsList(),
+        this.fetchQuizMetadata()
+      ];
 
-    forkJoin(requests).subscribe(results => {
+      forkJoin(requests).subscribe(results => {
 
-      this.questionsList = results[0] as Question[];
-      this.metadata = results[1] as QuizMetadata;
-      this.isDataLoading.next(false);
-    });
-
-     this.http.get('http://localhost:8080/api/admin/allQuestions').subscribe(res=>{
-       console.log(res);
-     })
+        this.questionsList = results[0] as Question[];
+        this.metadata = results[1] as QuizMetadata;
+        this.isDataLoading.next(false);
+      });
+    }
   }
 
   addNewQuestion(question:string, options:any[]){

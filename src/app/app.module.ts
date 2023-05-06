@@ -26,6 +26,10 @@ import {MatRadioModule} from '@angular/material/radio';
 import { GenerateReferralComponent } from './admin/admin-home/generate-referral/generate-referral.component';
 import { InvitationComponent } from './invitation/invitation.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { QuizHomeComponent } from './quiz/quiz-home/quiz-home.component';
+import { QuizAuthComponent } from './quiz/quiz-auth/quiz-auth.component';
+import { QuizGameComponent } from './quiz/quiz-game/quiz-game.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     AddQuestionComponent,
     GenerateReferralComponent,
     InvitationComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    QuizComponent,
+    QuizHomeComponent,
+    QuizAuthComponent,
+    QuizGameComponent
   ],
   imports: [
     BrowserModule,
