@@ -24,15 +24,21 @@ export class GenerateReferralComponent {
   async submit(form: NgForm) {
     if (form.valid) {
       this.isLoading = true;
-      this.adminHomeService.generateReferralToken(this.phoneNumber).subscribe(res => {
-        if (res.token) {
-          this.token = 'http://localhost:4200/invitation/' + res.token;
-          this.isGeneratedSuccessfully = true;
-        } else {
-          this.isGeneratedSuccessfully = false;
-        }
-        this.isLoading = false;
-      })
+      if (this.isPhoneNumber(this.phoneNumber)) {
+        this.adminHomeService.generateReferralToken(this.phoneNumber).subscribe(res => {
+          if (res.token) {
+            this.token = 'http://localhost:4200/invitation/' + res.token;
+            this.isGeneratedSuccessfully = true;
+          } else {
+            this.isGeneratedSuccessfully = false;
+          }
+          this.isLoading = false;
+        })
+      }
     }
+  }
+  isPhoneNumber(input: string): boolean {
+    const phoneRegex = /^\d{11}$/;
+    return phoneRegex.test(input);
   }
 }

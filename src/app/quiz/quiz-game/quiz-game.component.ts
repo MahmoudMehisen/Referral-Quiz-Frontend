@@ -21,7 +21,8 @@ export class QuizGameComponent implements OnInit, OnDestroy {
   answers: Answer[] = [];
 
   canSubmit = false;
-  constructor(private quizGameService: QuizGameService,private quizAuthService:QuizAuthService) {
+
+  constructor(private quizGameService: QuizGameService, private quizAuthService: QuizAuthService) {
   }
 
   ngOnInit() {
@@ -45,12 +46,13 @@ export class QuizGameComponent implements OnInit, OnDestroy {
     } else {
       this.answers.push(new Answer(questionId, optionId));
     }
-    if(this.answers.length === this.questions.length){
+    if (this.answers.length === this.questions.length) {
       this.canSubmit = true;
     }
   }
 
   submitAnswers() {
     console.log(this.answers)
+    this.quizGameService.submitGame(this.quizAuthService.guest.getValue().phoneNumber, this.answers);
   }
 }

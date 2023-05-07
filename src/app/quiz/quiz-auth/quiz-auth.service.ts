@@ -20,6 +20,9 @@ export class QuizAuthService {
     this.handelAuth(guest);
   }
 
+  updateWithQuiz(guest: Guest) {
+    this.handelAuth(guest);
+  }
   updateGuest(phoneNumber: string, email: string) {
     return this.http.post<Guest>('http://localhost:8080/api/guest/updateInfo', {
       email: email,
@@ -40,6 +43,8 @@ export class QuizAuthService {
       this.handelAuth(res);
     })
   }
+
+
 
   private handelAuth(guest: Guest) {
 
