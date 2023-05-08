@@ -4,56 +4,31 @@
       <div *ngIf="isLoading" style="text-align: center">
         <app-loading-spinner></app-loading-spinner>
       </div>
-
-
       <div *ngIf="!isLoading" style="text-align: center; padding: 10px">
         <div>
           <h1 style="font-size: 40px; font-weight: bold; color: brown">Admin Home Page</h1>
         </div>
-        <div>
-          <h1 style="font-size: 30px; color: brown;text-align: start">Quiz Info</h1>
-          <form #metadataForm="ngForm" (ngSubmit)="onSave(metadataForm)" *ngIf="!isLoading"
-                style="display: flex; align-items: center">
-            <div style="flex: 2; margin-right: 10px;">
-              <label for="pointsPerQuestion">Points Per Questions</label>
-              <input type="number" id="pointsPerQuestion" class="form-control" [min]="1" required
-                     ngModel="{{quizMetaData.pointsPerQuestion}}" name="pointsPerQuestion">
-            </div>
-            <div style="flex: 2; margin-right: 10px;">
-              <label for="pointsPerReferral">Points Per Referral</label>
-              <input type="number" id="pointsPerReferral" class="form-control" [min]="1" required
-                     ngModel="{{quizMetaData.pointsPerReferral}}" name="pointsPerReferral">
-            </div>
-            <div style="flex: 3; margin-right: 10px;">
-              <label for="referralExpirationTime">Referral Expiration Time in ms</label>
-              <input type="number" id="referralExpirationTime" class="form-control" [min]="1"
-                     ngModel="{{quizMetaData.referralExpirationTime}}" name="referralExpirationTime">
-            </div>
-            <div style="flex: 2; margin-right: 10px; ">
-              <label for="canUserDoReferral">User Can Referral</label>
-              <input class="form-check-input" id="canUserDoReferral" type="checkbox"
-                     ngModel="{{quizMetaData.canUserDoReferral}}" name="canUserDoReferral"/>
-            </div>
-            <div style="flex: 1; margin-right: 10px;">
-              <button mat-flat-button color="warn" type="submit">Save</button>
-            </div>
-          </form>
-        </div>
+        <app-admin-metadata></app-admin-metadata>
+        <hr>
+        <form #newGroupForm="ngForm" (ngSubmit)="addNewGroup(newGroupForm)" *ngIf="!isLoading"
+              style="display: flex; align-items: center">
+          <label style="font-weight: bold; font-size: 20px; flex: 2; margin-right: 10px;" for="newGroupText">New Group</label>
+          <input style="flex: 8; margin-right: 10px; padding: 20px;" class="form-check-input" id="newGroupText"
+                 type="text"
+                 ngModel="{{newGroupText}}" name="newGroupText" required/>
+          <button style="flex: 2; margin-right: 10px;" mat-flat-button color="warn" type="submit"> Add</button>
+        </form>
         <hr>
         <div>
           <div style="display: flex; justify-content: space-between">
-            <h1 style="font-size: 30px; color: brown;text-align: start">Questions List</h1>
-            <button mat-flat-button color="warn" (click)="onAddQuestion()">New Question</button>
+            <h1 style="font-size: 30px; color: brown;text-align: start">Groups List</h1>
           </div>
-          <div style="height: 500px; overflow-y: scroll;">
-            <div *ngFor="let quest of questionsList; let i = index">
-              <app-question [index]="i" [question]="quest"></app-question>
-            </div>
-          </div>
+          <app-question-groups></app-question-groups>
         </div>
         <hr>
+        <app-guests></app-guests>
+        <hr>
         <button mat-flat-button color="warn" (click)="onGenerateReferral()"> Generate Referral</button>
-
         <hr>
         <button mat-flat-button color="warn" (click)="onLogout()"> Logout</button>
       </div>

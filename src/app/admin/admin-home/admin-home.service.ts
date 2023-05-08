@@ -5,92 +5,153 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AdminAuthService} from "../admin-auth/admin-auth.service";
 import {QuizMetadata} from "../../shared/models/quiz-metadata.model";
 import {ReferralTokenModel} from "../../shared/models/referral-token.model";
+import {QuestionGroup} from "../../shared/models/question-group.model";
+import {Guest} from "../../shared/models/guest.model";
 
 
 @Injectable({providedIn: 'root'})
 export class AdminHomeService {
 
-  // @ts-ignore
-  questionsList: Question[];
+  groupsList: QuestionGroup[] = [];
+  guestsList: Guest[] = [];
   // @ts-ignore
   metadata: QuizMetadata;
 
   // @ts-ignore
   isDataLoading = new Subject<boolean>(true);
 
-  constructor(private http: HttpClient,private adminAuthService:AdminAuthService) {
+  constructor(private http: HttpClient, private adminAuthService: AdminAuthService) {
   }
 
-   fetchAdminHomeData() {
-    if(this.adminAuthService.admin.getValue() != null) {
+  fetchAdminHomeData() {
+    if (this.adminAuthService.admin.getValue() != null) {
       this.isDataLoading.next(true);
       const requests = [
-        this.fetchQuestionsList(),
-        this.fetchQuizMetadata()
+        this.fetchGroupsList(),
+        this.fetchQuizMetadata(),
+        this.fetchGuests()
       ];
 
       forkJoin(requests).subscribe(results => {
 
-        this.questionsList = results[0] as Question[];
+        this.groupsList = results[0] as QuestionGroup[];
         this.metadata = results[1] as QuizMetadata;
+        this.guestsList = results[2] as Guest[];
         this.isDataLoading.next(false);
       });
     }
   }
 
-  addNewQuestion(question:string, options:any[]){
-    return this.http.post('http://localhost:8080/api/admin/addQuestion',{
-      questionText:question,
-      questionOptions:options
+  addNewGroup(name: string) {
+    this.isDataLoading.next(true);
+    return this.http.post<QuestionGroup>('http://localhost:8080/api/admin/addGroup', {
+      name: name,
+    }).subscribe(res => {
+      this.groupsList.push(res);
+      this.isDataLoading.next(false);
     })
   }
 
-  updateQuestion(index:number,question:Question){
-    return this.http.post('http://localhost:8080/api/admin/updateQuestion',{
-      id:question.id,
-      questionText:question.questionText,
-      options:question.options
-    }).subscribe(res=>{
-      console.log(res);
-      this.questionsList[index] = question;
+  updateGroup(groupInd: number, group: QuestionGroup) {
+    this.isDataLoading.next(true);
+    return this.http.post<QuestionGroup>('http://localhost:8080/api/admin/updateGroup', {
+      id: group.id,
+      name: group.name
+    }).subscribe(res => {
+      this.groupsList[groupInd] = res;
       this.isDataLoading.next(false);
-    },error => {
-      console.log(error);
-      this.isDataLoading.next(false);
-    });
-  }
-  deleteQuestion(index:number,question:Question){
-    return this.http.delete('http://localhost:8080/api/admin/deleteQuestion/' + question.id).subscribe(res=>{
-      console.log(res);
-      this.questionsList.splice(index,1);
-      this.isDataLoading.next(false);
-    },error => {
+    }, error => {
       console.log(error);
       this.isDataLoading.next(false);
     });
   }
 
-  updateMetadata(newMetadata: QuizMetadata){
+  addNewQuestion(question: string, options: any[], groupId: number) {
+    return this.http.post('http://localhost:8080/api/admin/addQuestion', {
+      groupId: groupId,
+      questionText: question,
+      questionOptions: options
+    })
+  }
+
+  updateQuestion(groupInd: number, questionInd: number, question: Question) {
+    return this.http.post<Question>('http://localhost:8080/api/admin/updateQuestion', {
+      id: question.id,
+      questionText: question.questionText,
+      options: question.options
+    }).subscribe(res => {
+      this.groupsList[groupInd].questions[questionInd] = res;
+      this.isDataLoading.next(false);
+    }, error => {
+      console.log(error);
+      this.isDataLoading.next(false);
+    });
+  }
+
+  deleteQuestion(groupInd: number, questionInd: number, question: Question) {
+    return this.http.delete('http://localhost:8080/api/admin/deleteQuestion/' + question.id).subscribe(res => {
+      console.log(res);
+      this.groupsList[groupInd].questions.splice(questionInd, 1);
+      this.isDataLoading.next(false);
+    }, error => {
+      console.log(error);
+      this.isDataLoading.next(false);
+    });
+  }
+
+  updateMetadata(newMetadata: QuizMetadata) {
     this.isDataLoading.next(true);
-    return this.http.post<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata',newMetadata).subscribe(res=>{
+    return this.http.post<QuizMetadata>('http://localhost:8080/api/admin/updateMetadata', newMetadata).subscribe(res => {
       this.metadata = res;
       this.isDataLoading.next(false);
     });
   }
 
-  generateReferralToken(phoneNumber:string){
-    return this.http.post<ReferralTokenModel>('http://localhost:8080/api/admin/generateReferral',{
-      phoneNumber:phoneNumber,
-      userId:1,
-      fromAdmin:true
+  activeGroup(groupId: number) {
+    this.isDataLoading.next(true);
+    return this.http.post<QuizMetadata>('http://localhost:8080/api/admin/activeGroup/' + groupId, {}).subscribe(res => {
+      this.metadata = res;
+      this.isDataLoading.next(false);
+    });
+  }
+
+  stopQuiz() {
+    this.isDataLoading.next(true);
+    return this.http.post<QuizMetadata>('http://localhost:8080/api/admin/stopQuiz', {}).subscribe(res => {
+      this.metadata = res;
+      this.isDataLoading.next(false);
+    });
+  }
+
+  generateReferralToken(phoneNumber: string) {
+    return this.http.post<ReferralTokenModel>('http://localhost:8080/api/admin/generateReferral/' + phoneNumber, {})
+  }
+
+  guestEnablePlay(phoneNumber: string, index: number) {
+    this.isDataLoading.next(true);
+    return this.http.post<Guest>('http://localhost:8080/api/admin/guestEnablePlay/' + phoneNumber, {}).subscribe(res => {
+      this.guestsList[index] = res;
+      this.isDataLoading.next(false);
     })
   }
 
-  private async fetchQuestionsList(): Promise<Question[]> {
-    return await lastValueFrom(this.http.get<Question[]>('http://localhost:8080/api/admin/allQuestions'));
+  guestDisablePlay(phoneNumber: string, index: number) {
+    this.isDataLoading.next(true);
+    return this.http.post<Guest>('http://localhost:8080/api/admin/guestDisablePlay/' + phoneNumber, {}).subscribe(res => {
+      this.guestsList[index] = res;
+      this.isDataLoading.next(false);
+    })
+  }
+
+  private async fetchGroupsList(): Promise<QuestionGroup[]> {
+    return await lastValueFrom(this.http.get<QuestionGroup[]>('http://localhost:8080/api/admin/allGroupWithQuestions'));
   }
 
   private async fetchQuizMetadata(): Promise<QuizMetadata> {
     return await lastValueFrom(this.http.get<QuizMetadata>('http://localhost:8080/api/admin/metadata'));
+  }
+
+  private async fetchGuests(): Promise<Guest[]> {
+    return await lastValueFrom(this.http.get<Guest[]>('http://localhost:8080/api/admin/allGuests'));
   }
 }

@@ -30,6 +30,9 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizHomeComponent } from './quiz/quiz-home/quiz-home.component';
 import { QuizAuthComponent } from './quiz/quiz-auth/quiz-auth.component';
 import { QuizGameComponent } from './quiz/quiz-game/quiz-game.component';
+import { AdminMetadataComponent } from './admin/admin-home/admin-metadata/admin-metadata.component';
+import { QuestionGroupsComponent } from './admin/admin-home/question-groups/question-groups.component';
+import { GuestsComponent } from './admin/admin-home/guests/guests.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { QuizGameComponent } from './quiz/quiz-game/quiz-game.component';
     QuizComponent,
     QuizHomeComponent,
     QuizAuthComponent,
-    QuizGameComponent
+    QuizGameComponent,
+    AdminMetadataComponent,
+    QuestionGroupsComponent,
+    GuestsComponent
   ],
   imports: [
     BrowserModule,

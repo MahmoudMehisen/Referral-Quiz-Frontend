@@ -12,9 +12,14 @@ import {AddQuestionComponent} from "../add-question/add-question.component";
 })
 export class QuestionComponent implements OnInit, OnDestroy {
   // @ts-ignore
-  @Input() index: number;
+  @Input() groupInd: number;
+  // @ts-ignore
+  @Input() questionInd: number;
   // @ts-ignore
   @Input() question: Question;
+
+  // @ts-ignore
+  @Input() playedTimes: number;
   isLoading = false;
 
   itemSubscription: Subscription = new Subscription();
@@ -30,7 +35,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   onDelete() {
     this.isLoading = true;
-    this.adminHomeService.deleteQuestion(this.index, this.question);
+    this.adminHomeService.deleteQuestion(this.groupInd, this.questionInd, this.question);
   }
 
   onEdit() {
@@ -38,7 +43,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
       data: {
         question: this.question,
         isEditMode: true,
-        index:this.index,
+        questionInd: this.questionInd,
+        groupInd: this.groupInd
       }
     })
   }
