@@ -53,7 +53,7 @@ export class QuizAuthService {
   private handelAuth(guest: Guest) {
 
     this.getQuizMetadata(guest);
-    
+
     // 30 min
     this.autoLogout(1800000);
     const expirationDate = new Date(new Date().getTime() + 1800000);
@@ -66,9 +66,9 @@ export class QuizAuthService {
 
   private getQuizMetadata(guest:Guest){
     return this.http.get<QuizMetadata>('http://localhost:8080/api/guest/getQuizMetadata').subscribe(res => {
-      this.quizMetadata = res;    
+      this.quizMetadata = res;
       this.guest.next(guest);
-  
+
     });
   }
 

@@ -36,6 +36,9 @@ import { GuestsComponent } from './admin/admin-home/guests/guests.component';
 import { QuizReferralComponent } from './quiz/quiz-referral/quiz-referral.component';
 import { AdminRedeemsComponent } from './admin/admin-home/admin-redeems/admin-redeems.component';
 import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.component';
+import { RedeemListComponent } from './quiz/redeem-list/redeem-list.component';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +62,8 @@ import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.com
     GuestsComponent,
     QuizReferralComponent,
     AdminRedeemsComponent,
-    AddRedeemComponent
+    AddRedeemComponent,
+    RedeemListComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.com
     ReactiveFormsModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

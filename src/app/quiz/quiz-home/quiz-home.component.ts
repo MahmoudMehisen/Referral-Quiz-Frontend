@@ -3,7 +3,8 @@ import {Guest} from "../../shared/models/guest.model";
 import {Subscription} from "rxjs";
 import {QuizAuthService} from "../quiz-auth/quiz-auth.service";
 import {Router} from "@angular/router";
-import { QuizMetadata } from 'src/app/shared/models/quiz-metadata.model';
+import {QuizMetadata} from 'src/app/shared/models/quiz-metadata.model';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-quiz-home',
@@ -17,25 +18,30 @@ export class QuizHomeComponent implements OnInit, OnDestroy {
   // @ts-ignore
   subscription: Subscription;
   // @ts-ignore
-  quizMetadata:QuizMetadata;
+  quizMetadata: QuizMetadata;
   email = '';
 
-  constructor(private quizAuthService: QuizAuthService, private router: Router) {
+  constructor(private quizAuthService: QuizAuthService, private router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
     this.isLoading = true;
+
     this.guest = this.quizAuthService.guest.getValue();
-    this.quizMetadata = this.quizAuthService.quizMetadata;
+
+    // @ts-ignore
+    this.quizMetadata = new QuizMetadata(null, null, null, null, null, null);
+
     this.subscription = this.quizAuthService.guest.subscribe(res => {
       this.isLoading = false;
       this.guest = res;
       this.quizMetadata = this.quizAuthService.quizMetadata;
     })
+
   }
 
   playGame() {
-    this.router.navigate(['/quiz/game'],{replaceUrl:true})
+    this.router.navigate(['/quiz/game'], {replaceUrl: true})
   }
 
   ngOnDestroy() {
@@ -52,5 +58,9 @@ export class QuizHomeComponent implements OnInit, OnDestroy {
 
   logout() {
     this.quizAuthService.logout();
+  }
+
+  redeems() {
+    this.router.navigate(['/quiz/redeem-list']);
   }
 }

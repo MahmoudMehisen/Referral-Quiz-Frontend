@@ -12,6 +12,7 @@ import {QuizComponent} from "./quiz/quiz.component";
 import {QuizAuthComponent} from "./quiz/quiz-auth/quiz-auth.component";
 import {QuizHomeComponent} from "./quiz/quiz-home/quiz-home.component";
 import {QuizGameComponent} from "./quiz/quiz-game/quiz-game.component";
+import {RedeemListComponent} from "./quiz/redeem-list/redeem-list.component";
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
       {path: 'auth', component: QuizAuthComponent},
       {path: 'home', component: QuizHomeComponent},
       {path: 'game', component: QuizGameComponent},
+      {path: 'redeem-list', component: RedeemListComponent}
     ]
   },
   {path: 'invitation/:token', component: InvitationComponent},
