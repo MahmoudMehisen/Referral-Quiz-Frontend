@@ -1,7 +1,15 @@
 import {Injectable} from "@angular/core";
-import {HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {
+  HttpErrorResponse,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from "@angular/common/http";
 import {AdminAuthService} from "./admin-auth.service";
 import {exhaustMap, take} from "rxjs/operators";
+import {catchError, tap, throwError} from "rxjs";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -23,8 +31,17 @@ export class AuthInterceptorService implements HttpInterceptor {
         const modifiedReq = req.clone({
           headers: headers
         });
+        return next.handle(modifiedReq).pipe(
+          catchError((error: HttpErrorResponse) => {
+            if (error && error.status === 401) {
 
-        return next.handle(modifiedReq);
+              this.adminAuthService.logout();
+              return next.handle(modifiedReq);
+            } else {
+              return throwError(error);
+            }
+          })
+        );
       })
     );
   }

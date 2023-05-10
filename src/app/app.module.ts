@@ -34,6 +34,8 @@ import { AdminMetadataComponent } from './admin/admin-home/admin-metadata/admin-
 import { QuestionGroupsComponent } from './admin/admin-home/question-groups/question-groups.component';
 import { GuestsComponent } from './admin/admin-home/guests/guests.component';
 import { QuizReferralComponent } from './quiz/quiz-referral/quiz-referral.component';
+import { AdminRedeemsComponent } from './admin/admin-home/admin-redeems/admin-redeems.component';
+import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { QuizReferralComponent } from './quiz/quiz-referral/quiz-referral.compon
     AdminMetadataComponent,
     QuestionGroupsComponent,
     GuestsComponent,
-    QuizReferralComponent
+    QuizReferralComponent,
+    AdminRedeemsComponent,
+    AddRedeemComponent
   ],
   imports: [
     BrowserModule,

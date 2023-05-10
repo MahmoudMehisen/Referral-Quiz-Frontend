@@ -95,6 +95,7 @@ export class AdminAuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
+    console.log('logout');
   }
 
   autoLogout(expirationDuration: number) {
