@@ -4,12 +4,16 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {BehaviorSubject} from "rxjs";
 import {Admin} from "../../shared/models/admin.model";
+import { QuizMetadata } from "src/app/shared/models/quiz-metadata.model";
 
 @Injectable({providedIn: 'root'})
 export class QuizAuthService {
 
   // @ts-ignore
   guest = new BehaviorSubject<Guest>(null)
+
+  // @ts-ignore
+  quizMetadata:QuizMetadata;
 
   private tokenExpirationTimer: any;
 
@@ -48,7 +52,8 @@ export class QuizAuthService {
 
   private handelAuth(guest: Guest) {
 
-    this.guest.next(guest);
+    this.getQuizMetadata(guest);
+    
     // 30 min
     this.autoLogout(1800000);
     const expirationDate = new Date(new Date().getTime() + 1800000);
@@ -57,6 +62,14 @@ export class QuizAuthService {
     localStorage.setItem('guestData', JSON.stringify(guest));
     localStorage.setItem('guestExpire', JSON.stringify(expirationDate));
     this.router.navigate(['/quiz/home'], {replaceUrl: true});
+  }
+
+  private getQuizMetadata(guest:Guest){
+    return this.http.get<QuizMetadata>('http://localhost:8080/api/guest/getQuizMetadata').subscribe(res => {
+      this.quizMetadata = res;    
+      this.guest.next(guest);
+  
+    });
   }
 
   autoLogin() {

@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {Guest} from "../../shared/models/guest.model";
 import {Answer} from "../../shared/models/answer.model";
 import {QuizAuthService} from "../quiz-auth/quiz-auth.service";
+import { ReferralTokenModel } from "src/app/shared/models/referral-token.model";
 
 @Injectable({providedIn: 'root'})
 export class QuizGameService {
@@ -45,6 +46,13 @@ export class QuizGameService {
     }, error => {
       this.isDataLoading.next(false);
     });
+  }
+
+  generateReferralToken(phoneNumber: string) {
+    return this.http.post<ReferralTokenModel>('http://localhost:8080/api/quiz/referralAnotherUser', {
+      newGuestPhone:phoneNumber,
+      currentGuestPhone:this.quizAuthService.guest.getValue().phoneNumber,
+    })
   }
 
 }

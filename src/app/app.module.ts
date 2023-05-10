@@ -33,6 +33,7 @@ import { QuizGameComponent } from './quiz/quiz-game/quiz-game.component';
 import { AdminMetadataComponent } from './admin/admin-home/admin-metadata/admin-metadata.component';
 import { QuestionGroupsComponent } from './admin/admin-home/question-groups/question-groups.component';
 import { GuestsComponent } from './admin/admin-home/guests/guests.component';
+import { QuizReferralComponent } from './quiz/quiz-referral/quiz-referral.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { GuestsComponent } from './admin/admin-home/guests/guests.component';
     QuizGameComponent,
     AdminMetadataComponent,
     QuestionGroupsComponent,
-    GuestsComponent
+    GuestsComponent,
+    QuizReferralComponent
   ],
   imports: [
     BrowserModule,

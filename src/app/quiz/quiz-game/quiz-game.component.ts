@@ -4,6 +4,8 @@ import {QuizGameService} from "./quiz-game.service";
 import {Question} from "../../shared/models/question.model";
 import {Answer} from "../../shared/models/answer.model";
 import {QuizAuthService} from "../quiz-auth/quiz-auth.service";
+import { MatDialog } from '@angular/material/dialog';
+import { QuizReferralComponent } from '../quiz-referral/quiz-referral.component';
 
 @Component({
   selector: 'app-quiz-game',
@@ -22,7 +24,7 @@ export class QuizGameComponent implements OnInit, OnDestroy {
 
   canSubmit = false;
 
-  constructor(private quizGameService: QuizGameService, private quizAuthService: QuizAuthService) {
+  constructor(private quizGameService: QuizGameService, private quizAuthService: QuizAuthService,private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -52,7 +54,12 @@ export class QuizGameComponent implements OnInit, OnDestroy {
   }
 
   submitAnswers() {
-    console.log(this.answers)
-    this.quizGameService.submitGame(this.quizAuthService.guest.getValue().phoneNumber, this.answers);
+    if(this.quizAuthService.quizMetadata.canUserDoReferral){
+      this.dialog.open(QuizReferralComponent).afterClosed().subscribe(res=>{
+        this.quizGameService.submitGame(this.quizAuthService.guest.getValue().phoneNumber, this.answers);
+      });
+    }else{
+      this.quizGameService.submitGame(this.quizAuthService.guest.getValue().phoneNumber, this.answers);
+    }
   }
 }

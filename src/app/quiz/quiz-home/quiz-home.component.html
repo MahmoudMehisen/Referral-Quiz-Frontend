@@ -10,7 +10,7 @@
     <ng-container *ngIf="guest.email !== null">
       <p>Email: {{ guest.email }}</p>
       <p>Points: {{ guest.totalPoints }}</p>
-      <button *ngIf="guest.canPlay" (click)="playGame()" class="btn btn-success">Play Game</button>
+      <button *ngIf="guest.canPlay && quizMetadata !== null && quizMetadata.activeGroupId !== null" (click)="playGame()" class="btn btn-success">Play Game</button>
     </ng-container>
     <ng-container *ngIf="guest.email === null">
       <p>Please add your email:</p>
