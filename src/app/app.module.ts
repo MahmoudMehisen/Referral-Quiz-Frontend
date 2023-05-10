@@ -38,6 +38,7 @@ import { AdminRedeemsComponent } from './admin/admin-home/admin-redeems/admin-re
 import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.component';
 import { RedeemListComponent } from './quiz/redeem-list/redeem-list.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AdminRedeemHistoryComponent } from './admin/admin-home/admin-redeem-history/admin-redeem-history.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { ToastrModule } from 'ngx-toastr';
     QuizReferralComponent,
     AdminRedeemsComponent,
     AddRedeemComponent,
-    RedeemListComponent
+    RedeemListComponent,
+    AdminRedeemHistoryComponent
   ],
   imports: [
     BrowserModule,
