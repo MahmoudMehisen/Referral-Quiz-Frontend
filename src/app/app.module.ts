@@ -21,24 +21,24 @@ import {AuthInterceptorService} from "./admin/admin-auth/admin-interceptor.servi
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddQuestionComponent} from './admin/admin-home/add-question/add-question.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import {HttpResponseInterceptor} from "./admin/admin-home/response-interceptor";
+import {HttpResponseInterceptor} from "./shared/response-interceptor";
 import {MatRadioModule} from '@angular/material/radio';
-import { GenerateReferralComponent } from './admin/admin-home/generate-referral/generate-referral.component';
-import { InvitationComponent } from './invitation/invitation.component';
-import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import { QuizComponent } from './quiz/quiz.component';
-import { QuizHomeComponent } from './quiz/quiz-home/quiz-home.component';
-import { QuizAuthComponent } from './quiz/quiz-auth/quiz-auth.component';
-import { QuizGameComponent } from './quiz/quiz-game/quiz-game.component';
-import { AdminMetadataComponent } from './admin/admin-home/admin-metadata/admin-metadata.component';
-import { QuestionGroupsComponent } from './admin/admin-home/question-groups/question-groups.component';
-import { GuestsComponent } from './admin/admin-home/guests/guests.component';
-import { QuizReferralComponent } from './quiz/quiz-referral/quiz-referral.component';
-import { AdminRedeemsComponent } from './admin/admin-home/admin-redeems/admin-redeems.component';
-import { AddRedeemComponent } from './admin/admin-home/add-redeem/add-redeem.component';
-import { RedeemListComponent } from './quiz/redeem-list/redeem-list.component';
-import { ToastrModule } from 'ngx-toastr';
-import { AdminRedeemHistoryComponent } from './admin/admin-home/admin-redeem-history/admin-redeem-history.component';
+import {GenerateReferralComponent} from './admin/admin-home/generate-referral/generate-referral.component';
+import {InvitationComponent} from './invitation/invitation.component';
+import {PagenotfoundComponent} from './pagenotfound/pagenotfound.component';
+import {QuizComponent} from './quiz/quiz.component';
+import {QuizHomeComponent} from './quiz/quiz-home/quiz-home.component';
+import {QuizAuthComponent} from './quiz/quiz-auth/quiz-auth.component';
+import {QuizGameComponent} from './quiz/quiz-game/quiz-game.component';
+import {AdminMetadataComponent} from './admin/admin-home/admin-metadata/admin-metadata.component';
+import {QuestionGroupsComponent} from './admin/admin-home/question-groups/question-groups.component';
+import {GuestsComponent} from './admin/admin-home/guests/guests.component';
+import {QuizReferralComponent} from './quiz/quiz-referral/quiz-referral.component';
+import {AdminRedeemsComponent} from './admin/admin-home/admin-redeems/admin-redeems.component';
+import {AddRedeemComponent} from './admin/admin-home/add-redeem/add-redeem.component';
+import {RedeemListComponent} from './quiz/redeem-list/redeem-list.component';
+import {ToastrModule} from 'ngx-toastr';
+import {AdminRedeemHistoryComponent} from './admin/admin-home/admin-redeem-history/admin-redeem-history.component';
 
 
 @NgModule({
@@ -82,7 +82,13 @@ import { AdminRedeemHistoryComponent } from './admin/admin-home/admin-redeem-his
     MatCheckboxModule,
     MatDialogModule,
     MatRadioModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      closeButton: true,
+      timeOut: 3000,
+      progressBar: true,
+      preventDuplicates: true
+    })
   ],
   providers: [
     {

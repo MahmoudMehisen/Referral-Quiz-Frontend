@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {BehaviorSubject} from "rxjs";
 import {Admin} from "../../shared/models/admin.model";
-import { QuizMetadata } from "src/app/shared/models/quiz-metadata.model";
+import {QuizMetadata} from "src/app/shared/models/quiz-metadata.model";
 
 @Injectable({providedIn: 'root'})
 export class QuizAuthService {
@@ -13,7 +13,7 @@ export class QuizAuthService {
   guest = new BehaviorSubject<Guest>(null)
 
   // @ts-ignore
-  quizMetadata:QuizMetadata;
+  quizMetadata: QuizMetadata;
 
   private tokenExpirationTimer: any;
 
@@ -24,35 +24,28 @@ export class QuizAuthService {
     this.handelAuth(guest);
   }
 
-  updateWithQuiz(guest: Guest) {
-    this.handelAuth(guest);
-  }
-  updateGuest(phoneNumber: string, email: string) {
-    return this.http.post<Guest>('http://localhost:8080/api/guest/updateInfo', {
-      email: email,
-      phoneNumber: phoneNumber
-    }).subscribe(res => {
-      this.handelAuth(res);
-    })
-  }
-
   loginUsingPhone(phone: string) {
     return this.http.get<Guest>('http://localhost:8080/api/guest/getGuestByPhone/' + phone).subscribe(res => {
       this.handelAuth(res);
+    }, error => {
+      // @ts-ignore
+      this.guest.next(null);
     })
   }
 
   loginUsingEmail(email: string) {
     return this.http.get<Guest>('http://localhost:8080/api/guest/getGuestByEmail/' + email).subscribe(res => {
       this.handelAuth(res);
+    }, error => {
+      // @ts-ignore
+      this.guest.next(null);
     })
   }
 
 
-
   private handelAuth(guest: Guest) {
 
-    this.getQuizMetadata(guest);
+    this.guest.next(guest);
 
     // 30 min
     this.autoLogout(1800000);
@@ -64,14 +57,6 @@ export class QuizAuthService {
     this.router.navigate(['/quiz/home'], {replaceUrl: true});
   }
 
-  private getQuizMetadata(guest:Guest){
-    return this.http.get<QuizMetadata>('http://localhost:8080/api/guest/getQuizMetadata').subscribe(res => {
-      this.quizMetadata = res;
-      this.guest.next(guest);
-
-    });
-  }
-
   autoLogin() {
     let guest: { phoneNumber: string, email: string, totalPoints: number, canPlay: boolean };
 
@@ -80,7 +65,6 @@ export class QuizAuthService {
     if (!guest) {
       return;
     }
-
     const loadedGuest = new Guest(
       guest.phoneNumber,
       guest.email,

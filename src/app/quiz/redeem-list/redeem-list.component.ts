@@ -32,12 +32,12 @@ export class RedeemListComponent implements OnInit {
     }).subscribe(res=>{
       this.isLoading = false;
       // @ts-ignore
-      this.toast.success(res.message);
+      this.toast.success(res.message,"Success");
       // refresh
       this.quizAuthService.loginUsingPhone(this.quizAuthService.guest.getValue().phoneNumber);
     },error => {
       // @ts-ignore
-      this.toast.success(res.message);
+      this.toast.error(res.message,"Error");
     })
   }
 }

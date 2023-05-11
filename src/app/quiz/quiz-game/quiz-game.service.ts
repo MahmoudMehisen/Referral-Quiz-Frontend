@@ -6,7 +6,8 @@ import {Router} from "@angular/router";
 import {Guest} from "../../shared/models/guest.model";
 import {Answer} from "../../shared/models/answer.model";
 import {QuizAuthService} from "../quiz-auth/quiz-auth.service";
-import { ReferralTokenModel } from "src/app/shared/models/referral-token.model";
+import {ReferralTokenModel} from "src/app/shared/models/referral-token.model";
+import {QuizHomeService} from "../quiz-home/quiz-home.service";
 
 @Injectable({providedIn: 'root'})
 export class QuizGameService {
@@ -17,7 +18,7 @@ export class QuizGameService {
   isDataLoading = new Subject<boolean>(true);
 
 
-  constructor(private http: HttpClient, private router: Router,private quizAuthService:QuizAuthService) {
+  constructor(private http: HttpClient, private router: Router, private quizHomeService: QuizHomeService) {
   }
 
   startGame(phone: string) {
@@ -25,7 +26,6 @@ export class QuizGameService {
 
     this.http.post<Question[]>('http://localhost:8080/api/quiz/startQuiz/' + phone, {}).subscribe(res => {
       this.questionsList = res;
-      console.log(res);
       this.isDataLoading.next(false);
     }, error => {
       this.isDataLoading.next(false);
@@ -33,16 +33,18 @@ export class QuizGameService {
     });
   }
 
-  submitGame(phone:string, answers:Answer[]){
+  submitGame(phone: string, answers: Answer[]) {
     this.isDataLoading.next(true);
 
-    this.http.post<Guest>('http://localhost:8080/api/quiz/submitQuiz' , {
-      phoneNumber:phone,
-      answerQuestionOptionList:answers
+    this.http.post<Guest>('http://localhost:8080/api/quiz/submitQuiz', {
+      phoneNumber: phone,
+      answerQuestionOptionList: answers
     }).subscribe(res => {
-      this.quizAuthService.updateWithQuiz(res);
-      console.log(res);
+
+      this.quizHomeService.guest = res;
+      this.quizHomeService.isDataLoading.next(false);
       this.isDataLoading.next(false);
+      this.router.navigate(['/quiz/home'])
     }, error => {
       this.isDataLoading.next(false);
     });
@@ -50,8 +52,8 @@ export class QuizGameService {
 
   generateReferralToken(phoneNumber: string) {
     return this.http.post<ReferralTokenModel>('http://localhost:8080/api/quiz/referralAnotherUser', {
-      newGuestPhone:phoneNumber,
-      currentGuestPhone:this.quizAuthService.guest.getValue().phoneNumber,
+      newGuestPhone: phoneNumber,
+      currentGuestPhone: this.quizHomeService.guest.phoneNumber,
     })
   }
 

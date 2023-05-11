@@ -4,13 +4,13 @@
   <div *ngIf="!isLoading">
     <h2>Suggest for new user</h2>
     <form #generateForm="ngForm" (ngSubmit)="submit(generateForm)" novalidate>
-  
-  
+
+
       <label>
         Phone Number:
-        <input name="phoneNumber" type="tel" [(ngModel)]="phoneNumber" required>
+        <input name="phoneNumber" type="tel" [(ngModel)]="phoneNumber" required min="11">
       </label>
-  
+
       <ng-container style="padding: 15px;" *ngIf="isGeneratedSuccessfully">
         <div style="padding: 15px;"  class="alert alert-success" role="alert">
           <ng-template #linkTemplate>
@@ -18,9 +18,8 @@
           </ng-template>
           <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
         </div>
-        <button  class="btn btn-secondary" (click)="copyToClipboard()">Copy to Clipboard</button>
+        <button  class="btn btn-secondary"  type="button" (click)="copyToClipboard()">Copy to Clipboard</button>
       </ng-container>
       <button *ngIf="!isGeneratedSuccessfully" mat-flat-button color="warn" [disabled]="!generateForm.valid">Submit</button>
     </form>
   </div>
-  

@@ -18,7 +18,7 @@
         </ng-template>
         <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
       </div>
-      <button  class="btn btn-secondary" (click)="copyToClipboard()">Copy to Clipboard</button>
+      <button  class="btn btn-secondary" type="button" (click)="copyToClipboard()">Copy to Clipboard</button>
     </ng-container>
     <button mat-flat-button color="warn" [disabled]="!generateForm.valid">Submit</button>
   </form>

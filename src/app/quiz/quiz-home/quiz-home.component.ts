@@ -5,6 +5,7 @@ import {QuizAuthService} from "../quiz-auth/quiz-auth.service";
 import {Router} from "@angular/router";
 import {QuizMetadata} from 'src/app/shared/models/quiz-metadata.model';
 import {HttpClient} from "@angular/common/http";
+import {QuizHomeService} from "./quiz-home.service";
 
 @Component({
   selector: 'app-quiz-home',
@@ -21,23 +22,19 @@ export class QuizHomeComponent implements OnInit, OnDestroy {
   quizMetadata: QuizMetadata;
   email = '';
 
-  constructor(private quizAuthService: QuizAuthService, private router: Router, private http: HttpClient) {
+  constructor(private quizHomeService: QuizHomeService, private quizAuthService: QuizAuthService, private router: Router, private http: HttpClient) {
   }
 
   ngOnInit() {
     this.isLoading = true;
 
-    this.guest = this.quizAuthService.guest.getValue();
-
-    // @ts-ignore
-    this.quizMetadata = new QuizMetadata(null, null, null, null, null, null);
-
-    this.subscription = this.quizAuthService.guest.subscribe(res => {
-      this.isLoading = false;
-      this.guest = res;
-      this.quizMetadata = this.quizAuthService.quizMetadata;
+    this.subscription = this.quizHomeService.isDataLoading.subscribe(res => {
+      this.isLoading = res;
+      this.guest = this.quizHomeService.guest;
+      this.quizMetadata = this.quizHomeService.metadata;
     })
 
+    this.quizHomeService.fetchQuizHomeData();
   }
 
   playGame() {
@@ -51,7 +48,7 @@ export class QuizHomeComponent implements OnInit, OnDestroy {
   updateEmail() {
     if (this.email.length > 0) {
       this.isLoading = true;
-      this.quizAuthService.updateGuest(this.guest.phoneNumber, this.email)
+      this.quizHomeService.updateGuest(this.guest.phoneNumber, this.email)
     }
 
   }
