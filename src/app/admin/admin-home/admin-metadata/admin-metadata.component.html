@@ -17,10 +17,10 @@
       <input type="number" id="referralExpirationTime" class="form-control" [min]="1"
              ngModel="{{quizMetaData.referralExpirationTime}}" name="referralExpirationTime">
     </div>
-    <div style="flex: 2; margin-right: 10px; ">
+    <div style="flex: 2; margin-right: 10px;">
       <label for="canUserDoReferral">User Can Referral</label>
       <input class="form-check-input" id="canUserDoReferral" type="checkbox"
-             ngModel="{{quizMetaData.canUserDoReferral}}" name="canUserDoReferral"/>
+             [(ngModel)]="quizMetaData.canUserDoReferral" name="canUserDoReferral"/>
     </div>
 
     <div *ngIf="quizMetaData.activeGroupId !== null" style="flex: 1; margin-right: 10px; ">

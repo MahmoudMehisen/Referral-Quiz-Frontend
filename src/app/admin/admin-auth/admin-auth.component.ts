@@ -27,7 +27,7 @@ export class AdminAuthComponent {
       .subscribe({
         next: resData => {
           this.isLoading = false;
-          this.router.navigate(['/admin/home']);
+          this.router.navigate(['/admin/home'], {replaceUrl: true});
         },
         error: errorMessage => {
           this.isLoading = false;
