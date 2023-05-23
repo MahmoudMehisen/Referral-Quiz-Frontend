@@ -34,7 +34,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         return next.handle(modifiedReq).pipe(
           catchError((error: HttpErrorResponse) => {
             if (error && error.status === 401) {
-
+              console.log("here");
               this.adminAuthService.logout();
               return next.handle(modifiedReq);
             } else {
